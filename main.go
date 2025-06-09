@@ -1,12 +1,14 @@
 package main
 
 import (
-	"github.com/boombuler/barcode"
-	"github.com/boombuler/barcode/qr"
 	"html/template"
 	"image/png"
 	"log"
 	"net/http"
+
+	"github.com/boombuler/barcode"
+	"github.com/boombuler/barcode/qr"
+	"github.com/rs/cors"
 )
 
 type Page struct {
@@ -14,9 +16,15 @@ type Page struct {
 }
 
 func main() {
-
 	// multiplexor
 	mux := http.NewServeMux()
+
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"}, // Allow all origins
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"*"}, // Allow all headers
+		AllowCredentials: true,
+	})
 
 	// entry point
 	mux.HandleFunc("/", homeHandler)
@@ -28,12 +36,14 @@ func main() {
 	// generator
 	mux.HandleFunc("/generator/", generatorHandler)
 
+	// Wrap your existing handler with the CORS handler
+	handler := c.Handler(mux)
+
 	// starting
 	log.Printf("Idear QRGenerator Server Started ....")
-	if err := http.ListenAndServe(":8181", mux); err != nil {
+	if err := http.ListenAndServe(":8181", handler); err != nil {
 		log.Panic(err)
 	}
-
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
