@@ -5,55 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="content-security-policy" content="default-src 'self'">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="This is a description of your page.">
-    <meta name="keywords" content="keyword1, keyword2, keyword3">
-    <meta name="author" content="Your name">
-    <meta name="robots" content="index,follow">
-    <meta name="canonical" content="https://www.example.com/your-page">
-
     <title>Generador de QR Idear</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/main.css?v=1">
-
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-
-    <section class="header">
-        <div class="header-main">
-            <div class="header-main--logo">
-                <img src="/static/images/logo-idear.png" alt="logo idear" width="80" />
-            </div>
-            <div class="header-main--menu">
-                Servicios Tecnológicos Idear
-            </div>
+<body class="min-h-screen flex flex-col font-sans bg-gray-100">
+    <header class="bg-gray-800 text-white">
+        <div class="container mx-auto flex items-center justify-between p-4">
+            <img src="/static/images/logo-idear.png" alt="logo idear" class="w-20" />
+            <span class="font-semibold text-sm">Servicios Tecnológicos Idear</span>
         </div>
-    </section>
+    </header>
 
-    <section class="main">
-        <div class="main-section">
-            <div class="main-section--info">
-                <h2>Generador de C&oacute;digos QR</h2>
-                <p>Idear est&aacute; comprometido con ayudar y brindar peque&ntilde;as herramientas &uacute;tiles para la comunidad es
-                una de las formas de poder hacerlo</p>
-
-            </div>
-            <div class="main-section--form">
-                <form action="generator/" method="POST" class="main-section--form-box" >
-                    <label for="dataString" class="label-form">Texto a generar como QR: </label>
-                    <input type="text" name="dataString" id="dataString" class="input-form" />
-                    <input type="submit"  value="Generar" class="button-form">
-                </form>
-            </div>
+    <main class="flex-grow flex flex-col items-center justify-center p-4">
+        <div class="text-center mb-6">
+            <h2 class="text-3xl font-bold mb-2">Generador de C&oacute;digos QR</h2>
+            <p class="text-gray-600">Idear est&aacute; comprometido con ayudar y brindar peque&ntilde;as herramientas &uacute;tiles para la comunidad es una de las formas de poder hacerlo</p>
         </div>
-    </section>
-
-
-
+        <form action="generator/" method="POST" class="bg-white shadow-md rounded p-6 w-full max-w-md">
+            <label for="dataString" class="block text-sm font-medium text-gray-700 mb-2">Texto a generar como QR:</label>
+            <input type="text" name="dataString" id="dataString" class="w-full mb-4 p-2 border border-gray-300 rounded" />
+            <input type="submit"  value="Generar" class="w-full bg-gray-800 text-white py-2 rounded hover:bg-gray-700 cursor-pointer">
+        </form>
+    </main>
 
     <script src="/static/js/main.js"></script>
-
 </body>
 </html>
