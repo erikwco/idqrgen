@@ -15,7 +15,7 @@ type Page struct {
 
 func main() {
 
-	// multiplexor
+	// multiplexer
 	mux := http.NewServeMux()
 
 	// entry point
