@@ -16,7 +16,7 @@ type Page struct {
 }
 
 func main() {
-	// multiplexor
+	// multiplexer
 	mux := http.NewServeMux()
 
 	c := cors.New(cors.Options{
@@ -54,7 +54,21 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 func generatorHandler(w http.ResponseWriter, r *http.Request) {
 	dataString := r.FormValue("dataString")
-	qrCode, _ := qr.Encode(dataString, qr.L, qr.Auto)
-	qrCode, _ = barcode.Scale(qrCode, 512, 512)
-	_ = png.Encode(w, qrCode)
+	qrCode, err := qr.Encode(dataString, qr.L, qr.Auto)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	qrCode, err = barcode.Scale(qrCode, 512, 512)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "image/png")
+	if err := png.Encode(w, qrCode); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
